@@ -96,7 +96,8 @@ def main(options,args):
     from ROOT import gSystem, gROOT, gStyle
     gROOT.SetBatch()
     gSystem.Load("libRooFitCore")
-
+    gSystem.Load("libHiggsAnalysisCombinedLimit")
+    
     if options.doWebPage:
         from lip.Tools.rootutils import loadToolsLib, apply_modifs
         loadToolsLib()
@@ -137,6 +138,9 @@ def main(options,args):
         categories =[  "_cat%d" % i for i in range(0,ncat) ]
     else:
         categories =[  "_cat%s" % i for i in cats.split(",") ]
+
+    print categories
+    #print "##############################"
     
     if options.mva:
         clables = { "_cat0" : ("MVA > 0.89",""),
@@ -169,6 +173,7 @@ def main(options,args):
     mass.setBins(5000)
 
     print ws
+    print "##############################"
     
     aset = RooArgSet(mass)
 
@@ -185,7 +190,7 @@ def main(options,args):
         wspdf = ws
     
     for c in categories:
-        processes = [ "ggh", "vbf", "wzh" ]
+        processes = [ "ggh" ] #, "vbf", "wzh" ]
         if options.fp:
             processes = [ "vbf", "wzh" ]
         ### elif clables[c][0] == "Di-jet":
